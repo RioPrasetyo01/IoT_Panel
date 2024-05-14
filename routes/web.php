@@ -37,3 +37,35 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'index')->name('login');
 });
 
+Route::get("belajar-database", function () {
+    $random = rand(1, 1000);
+    DB::table('users')->insert([
+        'name' => 'Arkatama',
+        'email' => 'Rio'.$random.'@gmail.com',
+        'password' => 'ngawur'
+    ]);
+    $users = DB::table('users')
+    ->select('id', 'name', 'email')
+    ->where('name', '=', 'Arkatama')
+    ->get();
+    echo '<table border="1">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>No</th>';
+    echo '<th>ID</th>';
+    echo '<th>Name</th>';
+    echo '<th>Email</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    foreach ($users as $i => $user) {
+        echo '<tr>';
+        echo '<td>' . $i + 1 . '</td>';
+        echo '<td>' . $user->id . '</td>';
+        echo '<td>' . $user->name . '</td>';
+        echo '<td>' . $user->email . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+});
